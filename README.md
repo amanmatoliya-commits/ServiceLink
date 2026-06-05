@@ -263,16 +263,27 @@ http://127.0.0.1:8000/admin
 
 Screenshots will be added as the project progresses.
 
-Suggested screenshots:
+## 📸 Screenshot
 
-- Home Page
-- Services Page
-- Login Page
-- Register Page
-- Dashboard
-- Django Admin Panel
+### Home Page
 
----
+<img src="screenshot/home-page.jpeg" width="800">
+
+### Services Page
+
+<img src="screenshot/service-page.jpeg" width="800">
+
+### Login Page
+
+<img src="screenshot/login-page.jpeg" width="800">
+
+### Register Page
+
+<img src="screenshot/register-page.jpeg" width="800">
+
+### Django Admin Panel
+
+<img src="screenshot/admin-panel.jpeg" width="800">
 
 ## 🎯 Project Goal
 
