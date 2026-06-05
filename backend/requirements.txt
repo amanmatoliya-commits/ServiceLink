@@ -1,0 +1,6 @@
+# Python packages needed for the Django backend
+# Install with: pip install -r requirements.txt
+
+django>=4.2,<5.0
+djangorestframework>=3.14
+django-cors-headers>=4.0
