@@ -42,7 +42,7 @@ export default function ServiceCard({ service }) {
             </span>
           </div>
           <div className="text-lg font-bold text-blue-600">
-            ${service.price}
+            ₹{service.price}
             <span className="text-xs text-gray-500 font-normal">/visit</span>
           </div>
         </div>
