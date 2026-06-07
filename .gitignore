@@ -17,8 +17,16 @@ dist/
 .vscode/
 
 # Local docs
-public/documentation.html
+public/documentation.html/images/
 
 # OS files
 .DS_Store
 Thumbs.db
+
+
+
+# Project screenshots
+screenshot/
+
+# Optional
+public/images/
