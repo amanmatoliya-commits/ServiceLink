@@ -35,7 +35,7 @@ export default function Navbar() {
               <span className="text-white text-lg">🏠</span>
             </div>
             <span className="text-xl font-bold text-gray-900">
-              Urban<span className="text-blue-600">Home</span>
+              Service<span className="text-blue-600">Link</span>
             </span>
           </Link>
 

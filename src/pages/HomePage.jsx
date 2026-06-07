@@ -6,10 +6,21 @@
  */
 
 import { Link } from "react-router-dom";
-import services from "../data/services";
+import { useEffect, useState } from "react";
 import ServiceCard from "../components/ServiceCard";
 
 export default function HomePage() {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/services/")
+      .then((response) => response.json())
+      .then((data) => setServices(data))
+      .catch((error) =>
+        console.error("Error fetching services:", error)
+      );
+  }, []);
+
   const featuredServices = services.slice(0, 6);
 
   return (
@@ -378,7 +389,7 @@ export default function HomePage() {
 
           <p className="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-10">
 
-            Join thousands of homeowners using Urban Home Services every day.
+            Join thousands of homeowners using ServiceLink every day.
 
           </p>
 

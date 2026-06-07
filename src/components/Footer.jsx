@@ -18,7 +18,7 @@ export default function Footer() {
                 <span className="text-white text-lg">🏠</span>
               </div>
               <span className="text-xl font-bold text-white">
-                Urban<span className="text-blue-400">Home</span>
+                Service<span className="text-blue-400">Link</span>
               </span>
             </div>
             <p className="text-sm text-gray-400 max-w-md">
@@ -70,7 +70,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-center space-x-2">
                 <span>📧</span>
-                <span>support@urbanhome.com</span>
+                <span>support@servicelink.com</span>
               </li>
               <li className="flex items-center space-x-2">
                 <span>📞</span>
@@ -86,7 +86,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-500">
-          <p>© 2025 Urban Home Services. All rights reserved.</p>
+          <p>© 2025 ServiceLink All rights reserved.</p>
         </div>
       </div>
     </footer>
