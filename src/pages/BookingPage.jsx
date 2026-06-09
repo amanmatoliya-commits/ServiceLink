@@ -9,16 +9,17 @@
  */
 
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function BookingPage() {
   const { serviceId } = useParams(); // Get service ID from URL
   const { user, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Find the service by ID
   const [service, setService] = useState(null);
+const [serviceLoading, setServiceLoading] = useState(true);
 
 useEffect(() => {
   fetch("http://127.0.0.1:8000/api/services/")
@@ -27,11 +28,13 @@ useEffect(() => {
       const foundService = data.find(
         (s) => s.id === parseInt(serviceId)
       );
+
       setService(foundService);
     })
     .catch((err) =>
       console.error("Error loading service:", err)
-    );
+    )
+    .finally(() => setServiceLoading(false));
 }, [serviceId]);
 
   // Form state
@@ -44,6 +47,20 @@ useEffect(() => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+
+
+if (serviceLoading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="text-5xl mb-4">⏳</div>
+        <h2 className="text-xl font-semibold text-gray-700">
+          Loading Service...
+        </h2>
+      </div>
+    </div>
+  );
+}
 
   // If service not found, show error
   if (!service) {
@@ -124,25 +141,55 @@ useEffect(() => {
       return;
     }
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
+  //   // Simulate API delay
+  //   await new Promise((resolve) => setTimeout(resolve, 800));
 
-    // Create the booking (saved to localStorage)
-    createBooking({
-      userId: user.id,
-      serviceId: service.id,
-      serviceName: service.name,
-      serviceCategory: service.category,
-      servicePrice: service.price,
-      date: formData.date,
-      time: formData.time,
+  //   // Create the booking (saved to localStorage)
+  //   createBooking({
+  //     userId: user.id,
+  //     serviceId: service.id,
+  //     serviceName: service.name,
+  //     serviceCategory: service.category,
+  //     servicePrice: service.price,
+  //     date: formData.date,
+  //     time: formData.time,
+  //     address: formData.address,
+  //     notes: formData.notes,
+  //   });
+
+  //   setSuccess(true);
+  //   setLoading(false);
+  // }
+
+
+
+  const response = await fetch(
+  "http://127.0.0.1:8000/api/bookings/create/",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user: user.id,
+      service: service.id,
+      booking_date: formData.date,
+      booking_time: formData.time,
       address: formData.address,
       notes: formData.notes,
-    });
-
-    setSuccess(true);
-    setLoading(false);
+    }),
   }
+);
+
+const data = await response.json();
+
+if (!response.ok) {
+  throw new Error("Booking failed");
+}
+
+setSuccess(true);
+
+
 
   // Show success state after booking
   if (success) {
@@ -344,4 +391,5 @@ useEffect(() => {
       </div>
     </div>
   );
+}
 }
