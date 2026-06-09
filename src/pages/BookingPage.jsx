@@ -8,11 +8,9 @@
  * The user must be logged in to book.
  */
 
-import { useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import services from "../data/services";
-import { createBooking } from "../data/bookings";
 
 export default function BookingPage() {
   const { serviceId } = useParams(); // Get service ID from URL
@@ -20,7 +18,21 @@ export default function BookingPage() {
   const navigate = useNavigate();
 
   // Find the service by ID
-  const service = services.find((s) => s.id === parseInt(serviceId));
+  const [service, setService] = useState(null);
+
+useEffect(() => {
+  fetch("http://127.0.0.1:8000/api/services/")
+    .then((res) => res.json())
+    .then((data) => {
+      const foundService = data.find(
+        (s) => s.id === parseInt(serviceId)
+      );
+      setService(foundService);
+    })
+    .catch((err) =>
+      console.error("Error loading service:", err)
+    );
+}, [serviceId]);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -208,7 +220,7 @@ export default function BookingPage() {
                     <span className="text-sm font-medium">{service.rating}</span>
                   </div>
                   <div className="text-xl font-bold text-blue-600">
-                    ${service.price}
+                    ₹{service.price}
                     <span className="text-xs text-gray-500 font-normal">
                       /visit
                     </span>
@@ -305,15 +317,15 @@ export default function BookingPage() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="flex justify-between text-sm text-gray-600 mb-1">
                     <span>Service charge</span>
-                    <span>${service.price}.00</span>
+                    <span>₹{service.price}</span>
                   </div>
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
                     <span>Visit fee</span>
-                    <span>$0.00</span>
+                    <span>₹0.00</span>
                   </div>
                   <div className="flex justify-between text-base font-bold text-gray-900 pt-2 border-t">
                     <span>Total</span>
-                    <span className="text-blue-600">${service.price}.00</span>
+                    <span className="text-blue-600">₹{service.price}</span>
                   </div>
                 </div>
 
@@ -323,7 +335,7 @@ export default function BookingPage() {
                   disabled={loading}
                   className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 text-base"
                 >
-                  {loading ? "Processing..." : `Confirm Booking — $${service.price}`}
+                  {loading ? "Processing..." : `Confirm Booking — ₹${service.price}`}
                 </button>
               </form>
             </div>

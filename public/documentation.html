@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Home Services - Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; }
+        code { font-family: 'Fira Code', monospace; }
+        .card { background: white; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        @media print {
+            .no-print { display: none; }
+            .card { box-shadow: none; border: 1px solid #e5e7eb; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-2xl mb-6">
+                <span class="text-4xl">🏠</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Urban Home Services</h1>
+            <p class="text-xl text-blue-100 mb-6">Complete Tech Stack & Progress Report</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">React 19</span>
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Vite 7</span>
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Tailwind CSS</span>
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Django 4.2</span>
+                <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">SQLite</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Print Button -->
+    <div class="no-print max-w-5xl mx-auto px-6 py-4">
+        <button onclick="window.print()" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+            </svg>
+            Print / Save as PDF
+        </button>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-6 py-8 space-y-12">
+
+        <!-- Project Overview -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-4">🎯 Project Overview</h2>
+            <p class="text-gray-600 mb-6">
+                <strong>Urban Home Services</strong> is a full-stack web application that connects homeowners with professional service providers. Users can browse services, book appointments, and manage their bookings through a user-friendly dashboard.
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                    <div class="text-3xl mb-2">🔍</div>
+                    <div class="text-sm font-medium text-gray-700">Browse Services</div>
+                </div>
+                <div class="text-center p-4 bg-green-50 rounded-xl">
+                    <div class="text-3xl mb-2">📅</div>
+                    <div class="text-sm font-medium text-gray-700">Book Appointments</div>
+                </div>
+                <div class="text-center p-4 bg-purple-50 rounded-xl">
+                    <div class="text-3xl mb-2">👤</div>
+                    <div class="text-sm font-medium text-gray-700">User Dashboard</div>
+                </div>
+                <div class="text-center p-4 bg-orange-50 rounded-xl">
+                    <div class="text-3xl mb-2">📱</div>
+                    <div class="text-sm font-medium text-gray-700">Responsive Design</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">🛠️ Tech Stack</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Frontend -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">💻</span>
+                        Frontend Technologies
+                    </h3>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-2 font-semibold">Technology</th>
+                                <th class="text-left py-2 font-semibold">Version</th>
+                                <th class="text-left py-2 font-semibold">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2 font-medium text-blue-600">React</td>
+                                <td class="py-2 text-gray-500">19.x</td>
+                                <td class="py-2 text-gray-600">UI Components</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2 font-medium text-purple-600">Vite</td>
+                                <td class="py-2 text-gray-500">7.x</td>
+                                <td class="py-2 text-gray-600">Build Tool</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2 font-medium text-cyan-600">Tailwind CSS</td>
+                                <td class="py-2 text-gray-500">4.x</td>
+                                <td class="py-2 text-gray-600">Styling</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-medium text-red-600">React Router</td>
+                                <td class="py-2 text-gray-500">6.x</td>
+                                <td class="py-2 text-gray-600">Navigation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Backend -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">⚙️</span>
+                        Backend Technologies
+                    </h3>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-2 font-semibold">Technology</th>
+                                <th class="text-left py-2 font-semibold">Version</th>
+                                <th class="text-left py-2 font-semibold">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2 font-medium text-green-600">Django</td>
+                                <td class="py-2 text-gray-500">4.2+</td>
+                                <td class="py-2 text-gray-600">Web Framework</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2 font-medium text-orange-600">DRF</td>
+                                <td class="py-2 text-gray-500">3.14+</td>
+                                <td class="py-2 text-gray-600">REST API</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2 font-medium text-blue-600">SQLite</td>
+                                <td class="py-2 text-gray-500">Built-in</td>
+                                <td class="py-2 text-gray-600">Database</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-medium text-gray-600">CORS Headers</td>
+                                <td class="py-2 text-gray-500">4.0+</td>
+                                <td class="py-2 text-gray-600">Cross-Origin</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Diagram -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">🔄 System Architecture</h2>
+            <div class="bg-gray-900 text-gray-100 p-6 rounded-xl font-mono text-sm overflow-x-auto">
+<pre class="whitespace-pre">
+┌─────────────────────────────────────────────────────────────────┐
+│                         USER BROWSER                            │
+└─────────────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      REACT FRONTEND                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
+│  │  Pages   │  │Components│  │  Router  │  │ Context  │        │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘        │
+│                         │                                       │
+│                    Tailwind CSS (Styling)                       │
+└─────────────────────────────────────────────────────────────────┘
+                               │
+                          HTTP / JSON
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      DJANGO BACKEND                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                      │
+│  │  Users   │  │ Services │  │ Bookings │   ← Django Apps      │
+│  └──────────┘  └──────────┘  └──────────┘                      │
+│                         │                                       │
+│                   Django REST Framework                         │
+└─────────────────────────────────────────────────────────────────┘
+                               │
+                            SQL ORM
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                     SQLite DATABASE                             │
+│                   (db.sqlite3 file)                             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+            </div>
+        </section>
+
+        <!-- Project Structure -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">📁 Project Structure</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-semibold text-gray-800 mb-3">Frontend (src/)</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm">
+                        <div class="text-blue-600">📂 src/</div>
+                        <div class="ml-4">
+                            <div class="text-yellow-600">├── 📂 components/</div>
+                            <div class="ml-4 text-gray-500">├── Navbar.jsx</div>
+                            <div class="ml-4 text-gray-500">├── Footer.jsx</div>
+                            <div class="ml-4 text-gray-500">├── ServiceCard.jsx</div>
+                            <div class="ml-4 text-gray-500">└── LoadingSpinner.jsx</div>
+                            <div class="text-green-600">├── 📂 pages/</div>
+                            <div class="ml-4 text-gray-500">├── HomePage.jsx</div>
+                            <div class="ml-4 text-gray-500">├── LoginPage.jsx</div>
+                            <div class="ml-4 text-gray-500">├── RegisterPage.jsx</div>
+                            <div class="ml-4 text-gray-500">├── ServicesPage.jsx</div>
+                            <div class="ml-4 text-gray-500">├── BookingPage.jsx</div>
+                            <div class="ml-4 text-gray-500">├── DashboardPage.jsx</div>
+                            <div class="ml-4 text-gray-500">└── ContactPage.jsx</div>
+                            <div class="text-purple-600">├── 📂 context/</div>
+                            <div class="ml-4 text-gray-500">└── AuthContext.jsx</div>
+                            <div class="text-orange-600">├── 📂 data/</div>
+                            <div class="ml-4 text-gray-500">├── services.js</div>
+                            <div class="ml-4 text-gray-500">└── bookings.js</div>
+                            <div class="text-gray-600">├── App.tsx</div>
+                            <div class="text-gray-600">└── main.tsx</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-800 mb-3">Backend (backend/)</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm">
+                        <div class="text-blue-600">📂 backend/</div>
+                        <div class="ml-4">
+                            <div class="text-yellow-600">├── 📂 core/</div>
+                            <div class="ml-4 text-gray-500">├── settings.py</div>
+                            <div class="ml-4 text-gray-500">├── urls.py</div>
+                            <div class="ml-4 text-gray-500">└── wsgi.py</div>
+                            <div class="text-green-600">├── 📂 users/</div>
+                            <div class="ml-4 text-gray-500">├── models.py</div>
+                            <div class="ml-4 text-gray-500">├── views.py</div>
+                            <div class="ml-4 text-gray-500">└── serializers.py</div>
+                            <div class="text-purple-600">├── 📂 services/</div>
+                            <div class="ml-4 text-gray-500">├── models.py</div>
+                            <div class="ml-4 text-gray-500">├── views.py</div>
+                            <div class="ml-4 text-gray-500">└── serializers.py</div>
+                            <div class="text-orange-600">├── 📂 bookings/</div>
+                            <div class="ml-4 text-gray-500">├── models.py</div>
+                            <div class="ml-4 text-gray-500">├── views.py</div>
+                            <div class="ml-4 text-gray-500">└── serializers.py</div>
+                            <div class="text-gray-600">├── manage.py</div>
+                            <div class="text-gray-600">└── requirements.txt</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">✨ Features</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">User Registration & Login</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Browse & Search Services</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Category Filter</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Book Services with Date/Time</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">User Dashboard</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Booking History</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Cancel Bookings</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Profile Management</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Contact Form</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Responsive Design</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">Django Admin Panel</span>
+                </div>
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <span class="text-green-500 mr-3">✅</span>
+                    <span class="font-medium">REST API Endpoints</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Endpoints -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">🌐 API Endpoints</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="text-left py-3 px-4 font-semibold">Method</th>
+                            <th class="text-left py-3 px-4 font-semibold">Endpoint</th>
+                            <th class="text-left py-3 px-4 font-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">POST</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/users/register/</td>
+                            <td class="py-3 px-4 text-gray-600">Create new user</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">POST</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/users/login/</td>
+                            <td class="py-3 px-4 text-gray-600">Authenticate user</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">GET</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/users/profile/</td>
+                            <td class="py-3 px-4 text-gray-600">Get user profile</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">GET</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/services/</td>
+                            <td class="py-3 px-4 text-gray-600">List all services</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">GET</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/services/:id/</td>
+                            <td class="py-3 px-4 text-gray-600">Get single service</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">POST</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/bookings/create/</td>
+                            <td class="py-3 px-4 text-gray-600">Create booking</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">GET</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/bookings/my-bookings/</td>
+                            <td class="py-3 px-4 text-gray-600">Get user bookings</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-bold">PATCH</span></td>
+                            <td class="py-3 px-4 font-mono text-sm">/api/bookings/:id/cancel/</td>
+                            <td class="py-3 px-4 text-gray-600">Cancel booking</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Progress Report -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">📊 Progress Report</h2>
+            
+            <div class="flex items-center justify-between mb-6 p-4 bg-green-50 rounded-xl">
+                <div>
+                    <h3 class="text-lg font-bold text-green-800">Development Status</h3>
+                    <p class="text-green-600">All components completed successfully</p>
+                </div>
+                <div class="text-4xl font-bold text-green-600">100%</div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-semibold mb-3">Frontend Progress</h4>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">React Setup</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Components (4)</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Pages (7)</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Authentication</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Routing</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Styling (Tailwind)</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Backend Progress</h4>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Django Setup</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Users App</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Services App</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Bookings App</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">REST API</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Admin Panel</span>
+                            <span class="text-green-500">✅</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Statistics -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">📈 Code Statistics</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                    <div class="text-3xl font-bold text-blue-600">11</div>
+                    <div class="text-sm text-gray-600">React Components</div>
+                </div>
+                <div class="text-center p-4 bg-green-50 rounded-xl">
+                    <div class="text-3xl font-bold text-green-600">7</div>
+                    <div class="text-sm text-gray-600">Pages</div>
+                </div>
+                <div class="text-center p-4 bg-purple-50 rounded-xl">
+                    <div class="text-3xl font-bold text-purple-600">3</div>
+                    <div class="text-sm text-gray-600">Django Apps</div>
+                </div>
+                <div class="text-center p-4 bg-orange-50 rounded-xl">
+                    <div class="text-3xl font-bold text-orange-600">8</div>
+                    <div class="text-sm text-gray-600">API Endpoints</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup Commands -->
+        <section class="card p-8">
+            <h2 class="text-2xl font-bold gradient-text mb-6">🚀 Setup Commands</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-semibold mb-3 flex items-center">
+                        <span class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2 text-sm">1</span>
+                        Frontend Setup
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm">
+                        <div class="text-gray-400"># Install dependencies</div>
+                        <div class="text-green-400">npm install</div>
+                        <br>
+                        <div class="text-gray-400"># Start dev server</div>
+                        <div class="text-green-400">npm run dev</div>
+                        <br>
+                        <div class="text-gray-400"># Open in browser</div>
+                        <div class="text-yellow-400">http://localhost:5173</div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3 flex items-center">
+                        <span class="w-6 h-6 bg-green-100 rounded flex items-center justify-center mr-2 text-sm">2</span>
+                        Backend Setup
+                    </h4>
+                    <div class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm">
+                        <div class="text-gray-400"># Navigate & activate</div>
+                        <div class="text-green-400">cd backend</div>
+                        <div class="text-green-400">python -m venv venv</div>
+                        <div class="text-green-400">venv\Scripts\activate</div>
+                        <br>
+                        <div class="text-gray-400"># Install & run</div>
+                        <div class="text-green-400">pip install -r requirements.txt</div>
+                        <div class="text-green-400">python manage.py migrate</div>
+                        <div class="text-green-400">python manage.py runserver</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="text-2xl mb-2">🏠</div>
+            <h3 class="text-white font-bold text-lg mb-1">Urban Home Services</h3>
+            <p class="text-sm">PBL 4th Semester Project</p>
+            <p class="text-xs mt-4">Full-Stack Web Application • React + Django</p>
+        </div>
+    </footer>
+
+</body>
+</html>
