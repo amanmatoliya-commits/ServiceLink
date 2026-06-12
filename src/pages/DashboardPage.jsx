@@ -1,3 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * DashboardPage.jsx
  * -----------------
@@ -6,19 +24,26 @@
  * - Booking history with status
  * - Quick actions
  *
- * In the real app, data comes from:
- *   GET /api/users/profile/
+ * Data comes from:
  *   GET /api/bookings/my-bookings/
  */
 
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getUserBookings, cancelBooking } from "../data/bookings";
+import { API_URL } from "../config";
+// BUG FIX 3: Removed mock imports — getUserBookings, cancelBooking from
+// "../data/bookings" were localStorage stubs disconnected from the real API.
+// Bookings submitted via BookingPage.jsx's real POST would never appear here.
 import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function DashboardPage() {
-  const { user, isAuthenticated, updateProfile } = useAuth();
+  const {
+  user,
+  isAuthenticated,
+  loading: authLoading,
+  updateProfile,
+} = useAuth();
   const navigate = useNavigate();
 
   const [bookings, setBookings] = useState([]);
@@ -30,34 +55,86 @@ export default function DashboardPage() {
     phone: "",
     address: "",
   });
+  // BUG FIX 4: Added error state so API failures surface to the user
+  const [error, setError] = useState("");
 
-  // Redirect if not logged in
+  // Redirect if not logged in; fetch real bookings from API
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-      return;
-    }
+  if (authLoading) return;
 
-    // Load user bookings (simulates API call)
-    setTimeout(() => {
-      const userBookings = getUserBookings(user.id);
-      setBookings(userBookings.sort((a, b) => b.id - a.id)); // Newest first
-      setProfileData({
-        name: user.name,
-        phone: user.phone || "",
-        address: user.address || "",
-      });
-      setLoading(false);
-    }, 300);
-  }, [isAuthenticated, user, navigate]);
+  if (!isAuthenticated) {
+    navigate("/login");
+    return;
+  }
 
-  // Handle booking cancellation
-  function handleCancel(bookingId) {
-    if (window.confirm("Are you sure you want to cancel this booking?")) {
-      cancelBooking(bookingId);
-      // Refresh bookings
-      const updated = getUserBookings(user.id);
-      setBookings(updated.sort((a, b) => b.id - a.id));
+    // BUG FIX 2: Track cancelled flag so we don't setState after unmount
+    let cancelled = false;
+
+    const fetchBookings = async () => {
+      try {
+        // BUG FIX 3: Real API call replacing getUserBookings() mock
+        const response = await fetch(
+          `${API_URL}/api/bookings/my-bookings/?user_id=${user.id}`
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to load bookings.");
+        }
+
+        if (!cancelled) {
+          setBookings(data.sort((a, b) => b.id - a.id)); // Newest first
+          setProfileData({
+            name: user.name,
+            phone: user.phone || "",
+            address: user.address || "",
+          });
+        }
+      } catch (err) {
+        if (!cancelled) {
+          // BUG FIX 4: Surface fetch errors instead of silently hanging
+          setError(err.message);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchBookings();
+
+    // BUG FIX 2: Cleanup prevents state updates on unmounted component
+    return () => {
+      cancelled = true;
+    };
+  }, [authLoading, isAuthenticated, user, navigate]);
+
+  // Handle booking cancellation — now calls the real API
+  async function handleCancel(bookingId) {
+    if (!window.confirm("Are you sure you want to cancel this booking?")) return;
+
+    try {
+      // BUG FIX 3: Real API call replacing cancelBooking() mock
+      const response = await fetch(
+        `${API_URL}/api/bookings/${bookingId}/cancel/`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Cancellation failed.");
+      }
+
+      // Refresh bookings from API after cancellation
+      const refreshed = await fetch(
+        `${API_URL}/api/bookings/my-bookings/?user=${user.id}`
+      );
+      const updatedData = await refreshed.json();
+      setBookings(updatedData.sort((a, b) => b.id - a.id));
+    } catch (err) {
+      setError(err.message);
     }
   }
 
@@ -84,7 +161,13 @@ export default function DashboardPage() {
     }
   }
 
-  if (!isAuthenticated) return null;
+  if (authLoading) {
+  return <LoadingSpinner message="Checking session..." />;
+}
+
+if (!isAuthenticated) {
+  return null;
+}
   if (loading) return <LoadingSpinner message="Loading your dashboard..." />;
 
   // Calculate stats
@@ -112,6 +195,14 @@ export default function DashboardPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        {/* BUG FIX 4: Error banner — was completely missing before */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg mb-6">
+            {error}
+          </div>
+        )}
+
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
@@ -135,7 +226,9 @@ export default function DashboardPage() {
             },
             {
               label: "Total Spent",
-              value: `$${totalSpent}`,
+              // BUG FIX 1: Was `$${totalSpent}` — should be ₹ to match
+              // BookingPage.jsx and the rest of the app's Indian currency use
+              value: `₹${totalSpent}`,
               icon: "💰",
               color: "bg-purple-50 text-purple-700",
             },
@@ -230,8 +323,9 @@ export default function DashboardPage() {
                           <span>📅 {booking.date}</span>
                           <span>⏰ {booking.time}</span>
                           <span>📍 {booking.address}</span>
+                          {/* BUG FIX 1: Was `$${booking.servicePrice}` */}
                           <span className="font-semibold text-blue-600">
-                            💰 ${booking.servicePrice}
+                            💰 ₹{booking.servicePrice}
                           </span>
                         </div>
                         {booking.notes && (
