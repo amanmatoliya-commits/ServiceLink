@@ -23,7 +23,8 @@ public/documentation.html/images/
 .DS_Store
 Thumbs.db
 
-
+# Design documents
+DESIGN.md
 
 # Project screenshots
 screenshot/

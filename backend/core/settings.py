@@ -136,6 +136,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',  # Alternative port
 ]
 
+# CORS_ALLOW_ALL_ORIGINS = True
+
 # ============================================
 # REST FRAMEWORK SETTINGS
 # ============================================
