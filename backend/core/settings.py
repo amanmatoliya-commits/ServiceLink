@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',                         # User registration, login, profiles
     'services',                      # Service listings
     'bookings',                      # Booking management
+    'professionals',                 # Professional profiles
 ]
 
 # ============================================
