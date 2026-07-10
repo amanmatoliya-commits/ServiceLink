@@ -1,33 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * DashboardPage.jsx
- * -----------------
- * User dashboard showing:
- * - Profile information
- * - Booking history with status
- * - Quick actions
- *
- * Data comes from:
- *   GET /api/bookings/my-bookings/
- */
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -82,14 +54,29 @@ export default function DashboardPage() {
           throw new Error(data.message || "Failed to load bookings.");
         }
 
-        if (!cancelled) {
-          setBookings(data.sort((a, b) => b.id - a.id)); // Newest first
-          setProfileData({
-            name: user.name,
-            phone: user.phone || "",
-            address: user.address || "",
-          });
+        // NEW BUG FIX: Guard against non-array responses (e.g. error objects
+        // or paginated {results: [...]} shapes) before calling array methods
+        // on them — this is what caused "data.sort is not a function".
+        if (!Array.isArray(data)) {
+          throw new Error(data.message || "Invalid booking data.");
         }
+
+        if (!cancelled) {
+  // Sort newest bookings first
+  const sortedBookings = [...data].sort((a, b) => b.id - a.id);
+
+  setBookings(sortedBookings);
+
+  // Clear any previous error after successful fetch
+  setError("");
+
+  setProfileData({
+    name: user.name,
+    phone: user.phone || "",
+    address: user.address || "",
+  });
+}
+
       } catch (err) {
         if (!cancelled) {
           // BUG FIX 4: Surface fetch errors instead of silently hanging
@@ -129,10 +116,18 @@ export default function DashboardPage() {
 
       // Refresh bookings from API after cancellation
       const refreshed = await fetch(
-        `${API_URL}/api/bookings/my-bookings/?user=${user.id}`
+        `${API_URL}/api/bookings/my-bookings/?user_id=${user.id}`
       );
       const updatedData = await refreshed.json();
-      setBookings(updatedData.sort((a, b) => b.id - a.id));
+
+      // NEW BUG FIX: Validate the refreshed payload is an array before
+      // sorting/setting it, same as the initial fetch above.
+      if (!Array.isArray(updatedData)) {
+        throw new Error(updatedData.message || "Invalid booking data.");
+      }
+
+      const sortedBookings = [...updatedData].sort((a, b) => b.id - a.id);
+      setBookings(sortedBookings);
     } catch (err) {
       setError(err.message);
     }
@@ -178,7 +173,10 @@ if (!isAuthenticated) {
   ).length;
   const totalSpent = bookings
     .filter((b) => b.status !== "Cancelled")
-    .reduce((sum, b) => sum + (b.servicePrice || 0), 0);
+    // BUG FIX 1: Backend field is `service_price` (a string, e.g. "48.98"),
+    // not `servicePrice` — wrap in Number() so the sum is numeric, not
+    // string concatenation, and so it actually reflects real totals.
+    .reduce((sum, b) => sum + Number(b.service_price || 0), 0);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -308,8 +306,9 @@ if (!isAuthenticated) {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
+                          {/* BUG FIX 1: booking.serviceName -> booking.service_name */}
                           <h3 className="text-lg font-bold text-gray-900">
-                            {booking.serviceName}
+                            {booking.service_name}
                           </h3>
                           <span
                             className={`text-xs font-semibold px-2.5 py-1 rounded-full ${getStatusColor(
@@ -320,12 +319,14 @@ if (!isAuthenticated) {
                           </span>
                         </div>
                         <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-600">
-                          <span>📅 {booking.date}</span>
-                          <span>⏰ {booking.time}</span>
+                          {/* BUG FIX 1: booking.date -> booking.booking_date */}
+                          <span>📅 {booking.booking_date}</span>
+                          {/* BUG FIX 1: booking.time -> booking.booking_time */}
+                          <span>⏰ {booking.booking_time}</span>
                           <span>📍 {booking.address}</span>
-                          {/* BUG FIX 1: Was `$${booking.servicePrice}` */}
+                          {/* BUG FIX 1: booking.servicePrice -> booking.service_price */}
                           <span className="font-semibold text-blue-600">
-                            💰 ₹{booking.servicePrice}
+                            💰 ₹{booking.service_price}
                           </span>
                         </div>
                         {booking.notes && (

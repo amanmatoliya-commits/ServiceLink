@@ -1,7 +1,7 @@
 /**
- * RegisterPage.jsx
- * ----------------
- * User registration form.
+ * CustomerRegister.jsx
+ * ---------------------
+ * Customer registration form.
  * In the real app, this sends POST to Django: /api/users/register/
  * Collects: name, email, password, phone, address
  */
@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-export default function RegisterPage() {
+export default function CustomerRegister() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -33,43 +33,40 @@ export default function RegisterPage() {
 
   // Handle form submission
   async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  e.preventDefault();
 
-    // Validation
-    if (!formData.name || !formData.email || !formData.password) {
-      setError("Name, email, and password are required.");
-      setLoading(false);
-      return;
-    }
+  setError("");
+  setLoading(true);
 
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      setLoading(false);
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
-      setLoading(false);
-      return;
-    }
-
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // Try to register
-    const result = register(formData);
-
-    if (result.success) {
-      navigate("/dashboard"); // Redirect after successful registration
-    } else {
-      setError(result.message);
-    }
-
+  if (!formData.name || !formData.email || !formData.password) {
+    setError("Name, email, and password are required.");
     setLoading(false);
+    return;
   }
+
+  if (formData.password.length < 6) {
+    setError("Password must be at least 6 characters.");
+    setLoading(false);
+    return;
+  }
+
+  if (formData.password !== formData.confirmPassword) {
+    setError("Passwords do not match.");
+    setLoading(false);
+    return;
+  }
+
+  // ✅ Wait for backend response
+  const result = await register(formData);
+
+  if (result.success) {
+    navigate("/dashboard");
+  } else {
+    setError(result.message);
+  }
+
+  setLoading(false);
+}
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 py-12 px-4">
@@ -79,9 +76,11 @@ export default function RegisterPage() {
           <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
             <span className="text-2xl">👤</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Create Account</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Create Customer Account
+          </h1>
           <p className="text-gray-600 mt-2">
-            Join Urban Home Services today
+            Register to book trusted home services.
           </p>
         </div>
 
@@ -104,7 +103,7 @@ export default function RegisterPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="John Doe"
+                placeholder="Alice Johnson"
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
               />
             </div>
@@ -134,7 +133,7 @@ export default function RegisterPage() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+1 (555) 000-0000"
+                placeholder="+91 000-000-0000"
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
               />
             </div>
